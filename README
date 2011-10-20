@@ -1,0 +1,20 @@
+import ch
+
+class Example(ch.RoomManager):
+    def onMessage(self, room, user, msg):
+        if user == room.user: return #don't reply to itself
+        if msg.body.startswith("!"):
+            body = msg.body[1:]
+            try:
+                cmd, args = body.split(" ", 1)
+            except ValueError:
+                cmd = body
+                args = ""
+            if cmd == "say":
+                room.message(args)
+
+Example.easy_start(
+    name = "name",
+    password = "password",
+    rooms = ["list", "of", "room", "names"],
+)
